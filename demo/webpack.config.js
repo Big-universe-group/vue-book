@@ -6,8 +6,8 @@ var config = {
         main: './main'
     },
     output: {
-        path: path.join(__dirname, './dist'),
-        publicPath: '/dist/',
+        path: path.join(__dirname, './dist'),  // output 目录对应一个绝对路径
+        // publicPath: '/dist/',  // 指定在浏览器中所引用的绝对URL, 常常用于CDN?
         filename: 'main.js'
     },
     module: {
@@ -44,7 +44,11 @@ var config = {
     },
     plugins: [
         new ExtractTextPlugin("main.css")
-    ]
+    ],
+    devServer: {
+        host: '127.0.0.1',
+        port: 9090
+    }
 };
 
 module.exports = config;

@@ -17,6 +17,7 @@
         </div>
     </div>
 </template>
+
 <script>
     import Time from '../directives/time';
     import $ from '../libs/util';
@@ -35,8 +36,10 @@
             }
         },
         methods: {
+            // 自动获取某一个ID对应的文章
             getArticle () {
                 $.ajax.get('news/' + this.id).then(res => {
+                    // 对文章中的http/https地址进行更改
                     res.body = res.body
                         .replace(/src="http/g, 'src="' + $.imgPath + 'http');
                     res.body = res.body
@@ -49,15 +52,18 @@
             getComments () {
                 this.comments = [];
                 $.ajax.get('story/' + this.id + '/short-comments').then(res => {
-                    this.comments = res.comments.map(comment => {
-                        // 将头像的图片地址转为代理地址
-                        comment.avatar = $.imgPath + comment.avatar;
-                        return comment;
-                    });
+                    if (res.comments != undefined) {
+                        this.comments = res.comments.map(comment => {
+                            // 将头像的图片地址转为代理地址
+                            comment.avatar = $.imgPath + comment.avatar;
+                            return comment;
+                        });
+                    }
                 })
             }
         },
         watch: {
+            // 监视ID是否变动 一旦变动就自动获取文章
             id (val) {
                 if (val) this.getArticle();
             }

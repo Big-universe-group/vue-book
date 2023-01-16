@@ -47,7 +47,11 @@ var config = {
             filename: '[name].css',
             allChunks: true
         })
-    ]
+    ],
+    devServer: {
+        host: '127.0.0.1',
+        port: 9098,
+    }
 };
 
 module.exports = config;
