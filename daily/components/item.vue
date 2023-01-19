@@ -15,6 +15,7 @@
     import $ from '../libs/util';
     export default {
         props: {
+            // 父类传递给子类的某一个文章缩写信息对象: 标题, 图片
             data: {
                 type: Object
             }

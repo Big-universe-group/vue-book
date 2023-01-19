@@ -9,7 +9,7 @@ const Util = {
     apiPath: 'http://127.0.0.1:8010/'
 };
 
-// 功能: 获取当前请求发生时的今天时间戳
+// 功能: 获取当前请求发生时的今天0点0分0秒的时间戳
 Util.getTodayTime = function () {
     const date = new Date();
     date.setHours(0);
@@ -23,26 +23,23 @@ Util.getTodayTime = function () {
 Util.prevDay = function (timestamp = (new Date()).getTime()) {
     const date = new Date(timestamp);
     const year = date.getFullYear();
-    const month = date.getMonth() + 1 < 10
-        ? '0' + (date.getMonth() + 1)
-        : date.getMonth() + 1;
-    const day = date.getDate() < 10
-        ? '0' + date.getDate()
-        : date.getDate();
+    // getMouth获取的值范围: 0 ~ 11, 这里会序列化进行补0操作
+    const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     return year + '' + month + '' + day;
 };
 
 /*
-基本用法1: 通过GET/POST请求获取响应数据
+基本用法1: 通过GET/POST请求获取响应数据, 考虑到跨域请求, 下面的请求会报错
 注意1: axios基于Promise语法
 */
-// axios.get('https://www.baidu.com?id=123')
-//     .then(function(response) {
-//         console.log(response);
-//     })
-//     .catch(function(error) {
-//         console.log(error);
-//     });
+axios.get('https://www.baidu.com?id=123')
+    .then(function(response) {
+        console.log(response);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
 
 /*
 用法2: 使用自定义配置创建一个axios实例, 后续该实例就可以使用各种方法
@@ -56,7 +53,7 @@ Util.prevDay = function (timestamp = (new Date()).getTime()) {
     axios#patch(url[, data[, config]])
 */
 Util.ajax = axios.create({
-    baseURL: Util.apiPath,
+    baseURL: Util.apiPath,  // URL前缀, 真正的路径: baseURL + url
     timeout: 2000,
     headers: {},
 });

@@ -4,7 +4,7 @@
         <div class="daily-article-content" v-html="data.body"></div>
         <div class="daily-comments" v-show="comments.length">
             <span>评论（{{ comments.length }}）</span>
-            <div class="daily-comment" v-for="comment in comments">
+            <div class="daily-comment" v-for="comment in comments" :key="comment.author">
                 <div class="daily-comment-avatar">
                     <img :src="comment.avatar">
                 </div>
@@ -24,6 +24,7 @@
     export default {
         directives: { Time },
         props: {
+            // 文章ID
             id: {
                 type: Number,
                 default: 0
@@ -63,7 +64,8 @@
             }
         },
         watch: {
-            // 监视ID是否变动 一旦变动就自动获取文章
+            // 监视ID是否变动, 一旦点击新的文章并传递新的ID值, 则自动获取新的文章
+            // 注意: article不像item, 数据其他依靠article来自动获取而非从父类传递过来
             id (val) {
                 if (val) this.getArticle();
             }

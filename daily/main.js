@@ -1,5 +1,5 @@
 /*
-功能: 入口文件, 日报是一个单页应用, 只有一个入口: app.vue
+功能: 入口文件, 日报是一个单页应用, 只有一个入口(webpack.config.js中entry配置): main.js
 
 */
 import Vue from 'vue';
